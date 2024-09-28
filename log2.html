@@ -1,0 +1,80 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JAMB REGISTRATION</title>
+    <link rel="stylesheet" href="./Styles.css">
+</head>
+<body class="all">
+    <div class="head1">
+        <div><img src="./aamb.png" width="80px"></div>
+        <div><h1>JAMB 2025</h1></div>
+        <div><img src="./coat.jpeg" width="80px"></div>
+    </div>
+
+    <div class="gen2">
+        <h1 id="welcomeMessage"></h1>
+    </div>
+
+    <div class="gen3">
+        <div><h1>PLEASE FILL THE FORM BELOW TO CHECK IF YOU ARE QUALIFY TO REGISTER FOR JAMB 2025.</h1></div>
+    </div>
+
+    <!-- Form for user input -->
+    <div class="form-section">
+        <form id="jambForm">
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" name="name" required><br><br>
+
+            <label for="number">Phone Number:</label>
+            <input type="tel" id="number" name="number" required><br><br>
+
+            <label for="dob">Date of Birth:</label>
+            <input type="date" id="dob" name="dob" required><br><br>
+
+            <button type="button" onclick="checkEligibility()">Check Eligibility</button>
+        </form>
+    </div>
+
+    <div class="result">
+        <h2 id="eligibilityMessage"></h2>
+    </div>
+
+    <script>
+        // Retrieve the name from localStorage
+        const name = localStorage.getItem('username');
+        
+        // Display a welcome message
+        if (name) {
+            document.getElementById('welcomeMessage').textContent = `Welcome, ${name}!`;
+        } else {
+            document.getElementById('welcomeMessage').textContent = 'Welcome!';
+        }
+
+        // Function to calculate age and check eligibility
+        function calculateAge(dob) {
+            const birthDate = new Date(dob);
+            const today = new Date();
+            let age = today.getFullYear() - birthDate.getFullYear();
+            const monthDiff = today.getMonth() - birthDate.getMonth();
+            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+            return age;
+        }
+
+        function checkEligibility() {
+            const dob = document.getElementById('dob').value;
+            const age = calculateAge(dob);
+            const eligibilityMessage = document.getElementById('eligibilityMessage');
+            
+            if (age >= 17) {
+                eligibilityMessage.textContent = "You are eligible to register for JAMB 2025.";
+            } else {
+                eligibilityMessage.textContent = "Sorry, you must be at least 17 years old to register for JAMB 2025.";
+            }
+        }
+    </script>
+
+</body>
+</html>
